@@ -1,0 +1,896 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui version="4.0">
+ <class>MainWindow</class>
+ <widget class="QMainWindow" name="MainWindow">
+  <property name="geometry">
+   <rect>
+    <x>0</x>
+    <y>0</y>
+    <width>685</width>
+    <height>785</height>
+   </rect>
+  </property>
+  <property name="windowTitle">
+   <string>MainWindow</string>
+  </property>
+  <property name="styleSheet">
+   <string notr="true">*{
+	font: &quot;Cascadia Code&quot;;
+}
+</string>
+  </property>
+  <widget class="QWidget" name="centralwidget">
+   <layout class="QGridLayout" name="gridLayout_5">
+    <property name="leftMargin">
+     <number>0</number>
+    </property>
+    <property name="topMargin">
+     <number>0</number>
+    </property>
+    <property name="rightMargin">
+     <number>0</number>
+    </property>
+    <property name="bottomMargin">
+     <number>0</number>
+    </property>
+    <property name="spacing">
+     <number>0</number>
+    </property>
+    <item row="0" column="0">
+     <widget class="QTabWidget" name="Tab_window">
+      <property name="autoFillBackground">
+       <bool>false</bool>
+      </property>
+      <property name="tabPosition">
+       <enum>QTabWidget::North</enum>
+      </property>
+      <property name="tabShape">
+       <enum>QTabWidget::Rounded</enum>
+      </property>
+      <property name="currentIndex">
+       <number>0</number>
+      </property>
+      <property name="documentMode">
+       <bool>false</bool>
+      </property>
+      <property name="tabsClosable">
+       <bool>true</bool>
+      </property>
+      <property name="movable">
+       <bool>true</bool>
+      </property>
+      <widget class="QWidget" name="KK_Moosa_Plot_no_72">
+       <attribute name="title">
+        <string>KK_Moosa_Plot_no_72</string>
+       </attribute>
+       <layout class="QGridLayout" name="gridLayout_3">
+        <item row="0" column="0">
+         <widget class="QLabel" name="Heading">
+          <property name="font">
+           <font>
+            <weight>50</weight>
+            <italic>false</italic>
+            <bold>false</bold>
+           </font>
+          </property>
+          <property name="styleSheet">
+           <string notr="true">Qlabel{
+	font: 63 16pt &quot;Cascadia Code SemiBold&quot;;
+}
+</string>
+          </property>
+          <property name="text">
+           <string>KK Moosa Plot no 72</string>
+          </property>
+         </widget>
+        </item>
+        <item row="2" column="0">
+         <widget class="QWidget" name="PerSonWidget" native="true">
+          <property name="styleSheet">
+           <string notr="true">padding: 5px;</string>
+          </property>
+          <layout class="QGridLayout" name="gridLayout_4">
+           <item row="2" column="1">
+            <widget class="QScrollArea" name="scrollArea">
+             <property name="widgetResizable">
+              <bool>true</bool>
+             </property>
+             <widget class="QWidget" name="scrollAreaWidgetContents">
+              <property name="geometry">
+               <rect>
+                <x>0</x>
+                <y>0</y>
+                <width>631</width>
+                <height>482</height>
+               </rect>
+              </property>
+              <property name="font">
+               <font>
+                <family>Cascadia Code</family>
+                <pointsize>11</pointsize>
+               </font>
+              </property>
+              <layout class="QVBoxLayout" name="verticalLayout">
+               <item>
+                <widget class="QLabel" name="label">
+                 <property name="styleSheet">
+                  <string notr="true">*{
+	
+	font: 11pt &quot;Cascadia Code&quot;;
+}</string>
+                 </property>
+                 <property name="text">
+                  <string/>
+                 </property>
+                </widget>
+               </item>
+              </layout>
+             </widget>
+            </widget>
+           </item>
+           <item row="0" column="1">
+            <widget class="QLineEdit" name="searchedit">
+             <property name="inputMask">
+              <string/>
+             </property>
+             <property name="clearButtonEnabled">
+              <bool>true</bool>
+             </property>
+            </widget>
+           </item>
+           <item row="1" column="1">
+            <widget class="QComboBox" name="buildingcombobox">
+             <item>
+              <property name="text">
+               <string>Show All Building</string>
+              </property>
+             </item>
+             <item>
+              <property name="text">
+               <string>Add Building +</string>
+              </property>
+             </item>
+            </widget>
+           </item>
+          </layout>
+         </widget>
+        </item>
+        <item row="3" column="0">
+         <widget class="QWidget" name="widget" native="true">
+          <property name="styleSheet">
+           <string notr="true">*{
+	
+	font: 11pt &quot;Cascadia Code&quot;;
+}</string>
+          </property>
+          <layout class="QGridLayout" name="gridLayout_2">
+           <item row="0" column="10">
+            <widget class="QLineEdit" name="Balance_Rent">
+             <property name="text">
+              <string>Balance_Rent</string>
+             </property>
+            </widget>
+           </item>
+           <item row="0" column="7">
+            <widget class="QLineEdit" name="Rentel_Name">
+             <property name="text">
+              <string>Rentel_Name</string>
+             </property>
+            </widget>
+           </item>
+           <item row="1" column="10">
+            <widget class="QLineEdit" name="Gas_Meter_Number">
+             <property name="text">
+              <string>Gas_Meter_Number</string>
+             </property>
+            </widget>
+           </item>
+           <item row="0" column="6">
+            <widget class="QLineEdit" name="Rent">
+             <property name="text">
+              <string>Rent</string>
+             </property>
+            </widget>
+           </item>
+           <item row="1" column="6">
+            <widget class="QLineEdit" name="Electricity_Account_Number">
+             <property name="text">
+              <string>Electricity_Account_Number</string>
+             </property>
+            </widget>
+           </item>
+           <item row="1" column="7">
+            <widget class="QLineEdit" name="Consumer_Number">
+             <property name="text">
+              <string>Consumer_Number</string>
+             </property>
+            </widget>
+           </item>
+           <item row="1" column="9">
+            <widget class="QLineEdit" name="Gas_Costumer_Number">
+             <property name="text">
+              <string>Gas_Costumer_Number</string>
+             </property>
+            </widget>
+           </item>
+           <item row="2" column="7">
+            <widget class="QPushButton" name="Add_Person_btn">
+             <property name="text">
+              <string>Add Person</string>
+             </property>
+            </widget>
+           </item>
+           <item row="1" column="2">
+            <widget class="QLineEdit" name="Electricity_Meter_Number">
+             <property name="text">
+              <string>Electricity_Meter_Number</string>
+             </property>
+            </widget>
+           </item>
+           <item row="0" column="8">
+            <widget class="QLineEdit" name="Due_Date">
+             <property name="text">
+              <string>Due_Date</string>
+             </property>
+            </widget>
+           </item>
+           <item row="1" column="8">
+            <widget class="QLineEdit" name="Electricity_Meter_Name">
+             <property name="text">
+              <string>Electricity Meter Name</string>
+             </property>
+            </widget>
+           </item>
+           <item row="0" column="9">
+            <widget class="QLineEdit" name="Received_Rent">
+             <property name="text">
+              <string>Received_Rent</string>
+             </property>
+            </widget>
+           </item>
+           <item row="0" column="2">
+            <widget class="QLineEdit" name="NIC">
+             <property name="text">
+              <string>NIC</string>
+             </property>
+            </widget>
+           </item>
+           <item row="2" column="6">
+            <widget class="QLineEdit" name="Advance_Amount">
+             <property name="text">
+              <string>Advance_Amount</string>
+             </property>
+            </widget>
+           </item>
+           <item row="1" column="1">
+            <widget class="QPushButton" name="Electric_Bill">
+             <property name="text">
+              <string>Electric_Bill</string>
+             </property>
+             <property name="checkable">
+              <bool>true</bool>
+             </property>
+             <property name="checked">
+              <bool>true</bool>
+             </property>
+             <property name="autoRepeat">
+              <bool>false</bool>
+             </property>
+             <property name="default">
+              <bool>false</bool>
+             </property>
+             <property name="flat">
+              <bool>false</bool>
+             </property>
+            </widget>
+           </item>
+           <item row="0" column="1">
+            <widget class="QLineEdit" name="Serial_Number">
+             <property name="text">
+              <string>Serial_Number</string>
+             </property>
+            </widget>
+           </item>
+           <item row="2" column="1">
+            <widget class="QPushButton" name="Gas_Bill">
+             <property name="text">
+              <string>Gas_Bill</string>
+             </property>
+             <property name="checkable">
+              <bool>true</bool>
+             </property>
+             <property name="checked">
+              <bool>true</bool>
+             </property>
+            </widget>
+           </item>
+           <item row="2" column="2">
+            <widget class="QComboBox" name="buildingcombo_2">
+             <item>
+              <property name="text">
+               <string>Building</string>
+              </property>
+             </item>
+            </widget>
+           </item>
+          </layout>
+         </widget>
+        </item>
+       </layout>
+      </widget>
+      <widget class="QWidget" name="Summary">
+       <attribute name="title">
+        <string>Summary</string>
+       </attribute>
+       <layout class="QVBoxLayout" name="verticalLayout_2">
+        <item>
+         <widget class="QLabel" name="label_2">
+          <property name="text">
+           <string>Summary</string>
+          </property>
+         </widget>
+        </item>
+        <item>
+         <widget class="QScrollArea" name="scrollArea_2">
+          <property name="widgetResizable">
+           <bool>true</bool>
+          </property>
+          <widget class="QWidget" name="scrollAreaWidgetContents_2">
+           <property name="geometry">
+            <rect>
+             <x>0</x>
+             <y>0</y>
+             <width>659</width>
+             <height>696</height>
+            </rect>
+           </property>
+           <layout class="QVBoxLayout" name="verticalLayout_3">
+            <item>
+             <widget class="QWidget" name="widget_2" native="true">
+              <layout class="QGridLayout" name="gridLayout">
+               <item row="0" column="2">
+                <widget class="QLabel" name="label_5">
+                 <property name="text">
+                  <string>Received Rent</string>
+                 </property>
+                </widget>
+               </item>
+               <item row="0" column="1">
+                <widget class="QLabel" name="label_4">
+                 <property name="text">
+                  <string>Total Rent</string>
+                 </property>
+                </widget>
+               </item>
+               <item row="0" column="7">
+                <widget class="QLabel" name="label_8">
+                 <property name="text">
+                  <string>Balance Received</string>
+                 </property>
+                </widget>
+               </item>
+               <item row="0" column="0">
+                <widget class="QLabel" name="label_3">
+                 <property name="text">
+                  <string>Building</string>
+                 </property>
+                </widget>
+               </item>
+               <item row="0" column="8">
+                <widget class="QLabel" name="label_9">
+                 <property name="text">
+                  <string>Expenses</string>
+                 </property>
+                </widget>
+               </item>
+               <item row="0" column="4">
+                <widget class="QLabel" name="label_7">
+                 <property name="text">
+                  <string>Balance Rent</string>
+                 </property>
+                </widget>
+               </item>
+               <item row="0" column="3">
+                <widget class="QLabel" name="label_6">
+                 <property name="text">
+                  <string>Balance of the month</string>
+                 </property>
+                </widget>
+               </item>
+              </layout>
+             </widget>
+            </item>
+           </layout>
+          </widget>
+         </widget>
+        </item>
+       </layout>
+      </widget>
+      <widget class="QWidget" name="Expenses">
+       <attribute name="title">
+        <string>Expenses</string>
+       </attribute>
+       <layout class="QGridLayout" name="gridLayout_15">
+        <item row="2" column="0">
+         <widget class="QWidget" name="expense" native="true">
+          <layout class="QVBoxLayout" name="verticalLayout_4">
+           <item>
+            <widget class="QLineEdit" name="title_lineedit">
+             <property name="placeholderText">
+              <string>Expense Title</string>
+             </property>
+            </widget>
+           </item>
+           <item>
+            <widget class="QLineEdit" name="exp_amount_lineedit">
+             <property name="placeholderText">
+              <string>Amount/Price</string>
+             </property>
+             <property name="cursorMoveStyle">
+              <enum>Qt::LogicalMoveStyle</enum>
+             </property>
+             <property name="clearButtonEnabled">
+              <bool>true</bool>
+             </property>
+            </widget>
+           </item>
+           <item>
+            <widget class="QPushButton" name="add_exp_btn">
+             <property name="text">
+              <string>Add Expense+</string>
+             </property>
+            </widget>
+           </item>
+          </layout>
+         </widget>
+        </item>
+        <item row="0" column="0">
+         <widget class="QLabel" name="label_20">
+          <property name="text">
+           <string>Expenses</string>
+          </property>
+         </widget>
+        </item>
+        <item row="1" column="0">
+         <widget class="QScrollArea" name="scrollArea_3">
+          <property name="widgetResizable">
+           <bool>true</bool>
+          </property>
+          <widget class="QWidget" name="scrollAreaWidgetContents_expense">
+           <property name="geometry">
+            <rect>
+             <x>0</x>
+             <y>0</y>
+             <width>659</width>
+             <height>597</height>
+            </rect>
+           </property>
+           <layout class="QGridLayout" name="gridLayout_6">
+            <item row="0" column="0">
+             <widget class="QLabel" name="label_10">
+              <property name="text">
+               <string>TextLabel</string>
+              </property>
+             </widget>
+            </item>
+            <item row="1" column="0">
+             <widget class="QWidget" name="widget_3" native="true">
+              <layout class="QGridLayout" name="gridLayout_7">
+               <item row="0" column="0" rowspan="2">
+                <widget class="QLabel" name="label_11">
+                 <property name="font">
+                  <font>
+                   <pointsize>13</pointsize>
+                  </font>
+                 </property>
+                 <property name="text">
+                  <string>Tailor</string>
+                 </property>
+                </widget>
+               </item>
+               <item row="9" column="4">
+                <widget class="QLabel" name="label_19">
+                 <property name="font">
+                  <font>
+                   <pointsize>13</pointsize>
+                  </font>
+                 </property>
+                 <property name="text">
+                  <string>Building:Compound</string>
+                 </property>
+                </widget>
+               </item>
+               <item row="9" column="3">
+                <widget class="QPushButton" name="pushButton_3">
+                 <property name="text">
+                  <string>PushButton</string>
+                 </property>
+                </widget>
+               </item>
+               <item row="9" column="2">
+                <widget class="QLabel" name="label_16">
+                 <property name="font">
+                  <font>
+                   <pointsize>13</pointsize>
+                  </font>
+                 </property>
+                 <property name="text">
+                  <string>Balance Rent:</string>
+                 </property>
+                </widget>
+               </item>
+               <item row="8" column="0" rowspan="2">
+                <widget class="QLabel" name="label_13">
+                 <property name="font">
+                  <font>
+                   <pointsize>12</pointsize>
+                  </font>
+                 </property>
+                 <property name="text">
+                  <string>History</string>
+                 </property>
+                </widget>
+               </item>
+               <item row="0" column="2">
+                <widget class="QLabel" name="label_17">
+                 <property name="font">
+                  <font>
+                   <pointsize>13</pointsize>
+                  </font>
+                 </property>
+                 <property name="text">
+                  <string>Recieved Rent?:</string>
+                 </property>
+                </widget>
+               </item>
+               <item row="0" column="3">
+                <widget class="QPushButton" name="pushButton_4">
+                 <property name="text">
+                  <string>PushButton</string>
+                 </property>
+                </widget>
+               </item>
+               <item row="0" column="4">
+                <widget class="QPushButton" name="pushButton">
+                 <property name="text">
+                  <string>K.E</string>
+                 </property>
+                </widget>
+               </item>
+               <item row="1" column="4">
+                <widget class="QPushButton" name="pushButton_2">
+                 <property name="text">
+                  <string>G.B</string>
+                 </property>
+                </widget>
+               </item>
+               <item row="4" column="2">
+                <widget class="QLabel" name="label_18">
+                 <property name="font">
+                  <font>
+                   <pointsize>13</pointsize>
+                  </font>
+                 </property>
+                 <property name="text">
+                  <string>RENT: 1200</string>
+                 </property>
+                </widget>
+               </item>
+               <item row="4" column="0">
+                <widget class="QLabel" name="label_12">
+                 <property name="font">
+                  <font>
+                   <pointsize>13</pointsize>
+                  </font>
+                 </property>
+                 <property name="text">
+                  <string>Ser No.1</string>
+                 </property>
+                </widget>
+               </item>
+              </layout>
+             </widget>
+            </item>
+           </layout>
+          </widget>
+         </widget>
+        </item>
+       </layout>
+      </widget>
+     </widget>
+    </item>
+   </layout>
+  </widget>
+  <widget class="QMenuBar" name="menubar">
+   <property name="geometry">
+    <rect>
+     <x>0</x>
+     <y>0</y>
+     <width>685</width>
+     <height>21</height>
+    </rect>
+   </property>
+   <widget class="QMenu" name="menuThemes">
+    <property name="title">
+     <string>Themes</string>
+    </property>
+    <addaction name="dark_amber"/>
+    <addaction name="actiondark_blue"/>
+    <addaction name="actiondark_cyan"/>
+    <addaction name="actiondark_lightgreen"/>
+    <addaction name="actiondark_medical"/>
+    <addaction name="actiondark_pink"/>
+    <addaction name="actiondark_purple"/>
+    <addaction name="actiondark_red"/>
+    <addaction name="actiondark_teal"/>
+    <addaction name="actiondark_yellow"/>
+    <addaction name="actionlight_amber"/>
+    <addaction name="actionlight_blue"/>
+    <addaction name="actionlight_blue_500"/>
+    <addaction name="actionlight_cyan"/>
+    <addaction name="actionlight_cyan_500"/>
+    <addaction name="actionlight_lightgreen"/>
+    <addaction name="actionlight_lightgreen_500"/>
+    <addaction name="actionlight_orange"/>
+    <addaction name="actionlight_pink"/>
+    <addaction name="actionlight_pink_500"/>
+    <addaction name="actionlight_purple"/>
+    <addaction name="actionlight_purple_500"/>
+    <addaction name="actionlight_red"/>
+    <addaction name="actionlight_red_500"/>
+    <addaction name="actionlight_teal"/>
+    <addaction name="actionlight_teal_500"/>
+    <addaction name="actionlight_yellow"/>
+   </widget>
+   <widget class="QMenu" name="menuConvert_To_Excel">
+    <property name="title">
+     <string>Convert To Excel</string>
+    </property>
+   </widget>
+   <widget class="QMenu" name="menuAdd_Building">
+    <property name="title">
+     <string>Add Building</string>
+    </property>
+    <addaction name="action"/>
+    <addaction name="action_2"/>
+   </widget>
+   <widget class="QMenu" name="menuPrint">
+    <property name="title">
+     <string>Print</string>
+    </property>
+   </widget>
+   <addaction name="menuThemes"/>
+   <addaction name="menuConvert_To_Excel"/>
+   <addaction name="menuAdd_Building"/>
+   <addaction name="menuPrint"/>
+  </widget>
+  <action name="dark_amber">
+   <property name="checkable">
+    <bool>true</bool>
+   </property>
+   <property name="text">
+    <string>dark_amber</string>
+   </property>
+  </action>
+  <action name="actiondark_blue">
+   <property name="checkable">
+    <bool>true</bool>
+   </property>
+   <property name="text">
+    <string>dark_blue</string>
+   </property>
+  </action>
+  <action name="actiondark_cyan">
+   <property name="checkable">
+    <bool>true</bool>
+   </property>
+   <property name="text">
+    <string>dark_cyan</string>
+   </property>
+  </action>
+  <action name="actiondark_lightgreen">
+   <property name="checkable">
+    <bool>true</bool>
+   </property>
+   <property name="text">
+    <string>dark_lightgreen</string>
+   </property>
+  </action>
+  <action name="actiondark_medical">
+   <property name="checkable">
+    <bool>true</bool>
+   </property>
+   <property name="text">
+    <string>dark_medical</string>
+   </property>
+  </action>
+  <action name="actiondark_pink">
+   <property name="checkable">
+    <bool>true</bool>
+   </property>
+   <property name="text">
+    <string>dark_pink</string>
+   </property>
+  </action>
+  <action name="actiondark_purple">
+   <property name="checkable">
+    <bool>true</bool>
+   </property>
+   <property name="text">
+    <string>dark_purple</string>
+   </property>
+  </action>
+  <action name="actiondark_red">
+   <property name="checkable">
+    <bool>true</bool>
+   </property>
+   <property name="text">
+    <string>dark_red</string>
+   </property>
+  </action>
+  <action name="actiondark_teal">
+   <property name="checkable">
+    <bool>true</bool>
+   </property>
+   <property name="text">
+    <string>dark_teal</string>
+   </property>
+  </action>
+  <action name="actiondark_yellow">
+   <property name="checkable">
+    <bool>true</bool>
+   </property>
+   <property name="text">
+    <string>dark_yellow</string>
+   </property>
+  </action>
+  <action name="actionlight_amber">
+   <property name="checkable">
+    <bool>true</bool>
+   </property>
+   <property name="text">
+    <string>light_amber</string>
+   </property>
+  </action>
+  <action name="actionlight_blue">
+   <property name="checkable">
+    <bool>true</bool>
+   </property>
+   <property name="text">
+    <string>light_blue</string>
+   </property>
+  </action>
+  <action name="actionlight_blue_500">
+   <property name="checkable">
+    <bool>true</bool>
+   </property>
+   <property name="text">
+    <string>light_blue_500</string>
+   </property>
+  </action>
+  <action name="actionlight_cyan">
+   <property name="checkable">
+    <bool>true</bool>
+   </property>
+   <property name="text">
+    <string>light_cyan</string>
+   </property>
+  </action>
+  <action name="actionlight_cyan_500">
+   <property name="checkable">
+    <bool>true</bool>
+   </property>
+   <property name="text">
+    <string>light_cyan_500</string>
+   </property>
+  </action>
+  <action name="actionlight_lightgreen">
+   <property name="checkable">
+    <bool>true</bool>
+   </property>
+   <property name="text">
+    <string>light_lightgreen</string>
+   </property>
+  </action>
+  <action name="actionlight_lightgreen_500">
+   <property name="checkable">
+    <bool>true</bool>
+   </property>
+   <property name="text">
+    <string>light_lightgreen_500</string>
+   </property>
+  </action>
+  <action name="actionlight_orange">
+   <property name="checkable">
+    <bool>true</bool>
+   </property>
+   <property name="text">
+    <string>light_orange</string>
+   </property>
+  </action>
+  <action name="actionlight_pink">
+   <property name="checkable">
+    <bool>true</bool>
+   </property>
+   <property name="text">
+    <string>light_pink</string>
+   </property>
+  </action>
+  <action name="actionlight_pink_500">
+   <property name="checkable">
+    <bool>true</bool>
+   </property>
+   <property name="text">
+    <string>light_pink_500</string>
+   </property>
+  </action>
+  <action name="actionlight_purple">
+   <property name="checkable">
+    <bool>true</bool>
+   </property>
+   <property name="text">
+    <string>light_purple</string>
+   </property>
+  </action>
+  <action name="actionlight_purple_500">
+   <property name="checkable">
+    <bool>true</bool>
+   </property>
+   <property name="text">
+    <string>light_purple_500</string>
+   </property>
+  </action>
+  <action name="actionlight_red">
+   <property name="checkable">
+    <bool>true</bool>
+   </property>
+   <property name="text">
+    <string>light_red</string>
+   </property>
+  </action>
+  <action name="actionlight_red_500">
+   <property name="checkable">
+    <bool>true</bool>
+   </property>
+   <property name="text">
+    <string>light_red_500</string>
+   </property>
+  </action>
+  <action name="actionlight_teal">
+   <property name="checkable">
+    <bool>true</bool>
+   </property>
+   <property name="text">
+    <string>light_teal</string>
+   </property>
+  </action>
+  <action name="actionlight_teal_500">
+   <property name="checkable">
+    <bool>true</bool>
+   </property>
+   <property name="text">
+    <string>light_teal_500</string>
+   </property>
+  </action>
+  <action name="actionlight_yellow">
+   <property name="checkable">
+    <bool>true</bool>
+   </property>
+   <property name="text">
+    <string>light_yellow</string>
+   </property>
+  </action>
+  <action name="action">
+   <property name="text">
+    <string>+</string>
+   </property>
+  </action>
+  <action name="action_2">
+   <property name="text">
+    <string>-</string>
+   </property>
+  </action>
+ </widget>
+ <resources/>
+ <connections/>
+</ui>
