@@ -1,4 +1,4 @@
-import json, os, ast, datetime
+import json, os, sqlite3, datetime
 import pandas as pd
 from PyQt5.QtCore import *
 from PyQt5.QtGui import *
@@ -11,50 +11,34 @@ from KK_Moosa_Plot_no_72 import Ui_Form
 
 class Expenses:
     def __init__(self):
-        self.expense_data = self.read_file()
-        # self.ask_method()
-        self.save_to_file("expense.json")
+        self.conn = sqlite3.connect("expense.db")
+        self.cursor = self.conn.cursor()
+        self.create_table()
+
+    def create_table(self):
+        self.cursor.execute("""CREATE TABLE IF NOT EXISTS expenses
+                         (title TEXT PRIMARY KEY, expense REAL, date_added TEXT)""")
+        self.conn.commit()
 
     def add_expense(self, Title, Expense):
-        for title, exp in self.expense_data.items():
-            if title == Title:
-                print(f"Error: Expense with the same title already exists: {title}")
-                return
-        self.date_added = datetime.datetime.now().strftime("%Y-%m-%d")
-        dictts = {
-            Title: {"Expense": Expense, "date_added": self.date_added},
-        }
-        self.expense_data.update(dictts)
+        self.cursor.execute("INSERT INTO expenses VALUES (?,?,?)", (Title, Expense, datetime.datetime.now().strftime("%Y-%m-%d")))
+        self.conn.commit()
 
     def delete_expense(self, title):
-        if title in self.expense_data:
-            del self.expense_data[title]
-            print(f"Expense '{title}' deleted successfully.")
-        else:
-            print(f"Error: Expense with the title '{title}' does not exist.")
+        self.cursor.execute("DELETE FROM expenses WHERE title =?", (title,))
+        self.conn.commit()
 
     def update_expense(self, title, new_expense, new_title):
-        if title in self.expense_data:
-            self.delete_expense(title)
-            self.add_expense(new_title, new_expense)
-        else:
-            print(f"Error: Expense with the title '{title}' does not exist.")
+        self.delete_expense(title)
+        self.add_expense(new_title, new_expense)
 
     def get_expense(self, title):
-        if title in self.expense_data:
-            return self.expense_data[title]
-        else:
-            print(f"Error: Expense with the title '{title}' does not exist.")
-
-    def save_to_file(self, filename):
-        with open(filename, "w") as f:
-            json.dump(self.expense_data, f, indent=4)
-
-    def read_file(self, filename="expense.json") -> dict:
-        with open(filename, "r") as f:
-            data = json.load(f)
-        return data
-        # print(f"File '{filename}' loaded successfully.")
+        self.cursor.execute("SELECT * FROM expenses WHERE title =?", (title,))
+        return self.cursor.fetchone()
+    
+    def get_all_expenses(self):
+        self.cursor.execute("SELECT * FROM expenses")
+        return self.cursor.fetchall()
 
     def ask_method(self):
         choice = 1
@@ -93,6 +77,139 @@ class Expenses:
             print("Exiting the program...")
             sys.exit()
 
+class Personed:
+    def __init__(
+        self,
+        Serial_Number,
+        NIC,
+        Rent,
+        Rentel_Name,
+        Due_Date,
+        Received_Rent,
+        Balance_Rent,
+        Electric_Bill,
+        Electricity_Meter_Number,
+        Electricity_Account_Number,
+        Consumer_Number,
+        Electricity_Meter_Name,
+        Gas_Costumer_Number,
+        Gas_Meter_Number,
+        Advance_Amount,
+        Building,
+        Gas_Bill,
+    ):
+        self.current_month, self.previous_month = self.get_current_and_previous_month()
+        self.setup_directories()
+        self.setup_database()
+        today = datetime.date.today().strftime("%Y-%m-%d")
+
+        data = (
+            Serial_Number,
+            NIC,
+            Rent,
+            Rentel_Name,
+            Due_Date,
+            Received_Rent,
+            Balance_Rent,
+            Electric_Bill,
+            Electricity_Meter_Number,
+            Electricity_Account_Number,
+            Consumer_Number,
+            Electricity_Meter_Name,
+            Gas_Costumer_Number,
+            Gas_Meter_Number,
+            Advance_Amount,
+            Building,
+            Gas_Bill,
+            today,
+        )
+        if Rent != "test":
+            self.insert_data(data)
+
+    def get_current_and_previous_month(self):
+        today = datetime.date.today()
+        current_month = today.strftime("%B_%Y")
+        first_day_of_current_month = today.replace(day=1)
+        last_day_of_previous_month = first_day_of_current_month - datetime.timedelta(
+            days=1
+        )
+        previous_month = last_day_of_previous_month.strftime("%B_%Y")
+        return current_month, previous_month
+
+    def setup_directories(self):
+        os.makedirs(f"data/{self.current_month}", exist_ok=True)
+        previous_month_dir = f"data/{self.previous_month}"
+        if not os.path.exists(previous_month_dir):
+            os.makedirs(previous_month_dir)
+
+    def setup_database(self):
+        self.conn = sqlite3.connect(f"data/{self.current_month}/persondata.db")
+        self.cursor = self.conn.cursor()
+        self.cursor.execute(
+            """
+            CREATE TABLE IF NOT EXISTS persondata (
+                id INTEGER PRIMARY KEY AUTOINCREMENT,
+                Serial_Number TEXT,
+                NIC TEXT,
+                Rent REAL,
+                Rentel_Name TEXT,
+                Due_Date TEXT,
+                Received_Rent REAL,
+                Balance_Rent REAL,
+                Electric_Bill REAL,
+                Electricity_Meter_Number TEXT,
+                Electricity_Account_Number TEXT,
+                Consumer_Number TEXT,
+                Electricity_Meter_Name TEXT,
+                Gas_Costumer_Number TEXT,
+                Gas_Meter_Number TEXT,
+                Advance_Amount REAL,
+                Building TEXT,
+                Gas_Bill REAL,
+                Date_Added TEXT
+            )
+        """
+        )
+        self.conn.commit()
+
+    def insert_data(self, data):
+        self.cursor.execute(
+            """
+            INSERT INTO persondata (
+                Serial_Number,
+                NIC,
+                Rent,
+                Rentel_Name,
+                Due_Date,
+                Received_Rent,
+                Balance_Rent,
+                Electric_Bill,
+                Electricity_Meter_Number,
+                Electricity_Account_Number,
+                Consumer_Number,
+                Electricity_Meter_Name,
+                Gas_Costumer_Number,
+                Gas_Meter_Number,
+                Advance_Amount,
+                Building,
+                Gas_Bill,
+                Date_Added
+            ) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
+        """,
+            data,
+        )
+        self.conn.commit()
+
+    def update_person(self, rentel_name, **kwargs):
+        columns = ", ".join(f"{key} = ?" for key in kwargs.keys())
+        values = list(kwargs.values()) + [rentel_name]
+        self.cursor.execute(
+            f"UPDATE persondata SET {columns} WHERE Rentel_Name = ?", values
+        )
+        self.conn.commit()
+
+    def __del__(self):
+        self.conn.close()
 
 class Person:
     def __init__(
@@ -231,6 +348,7 @@ class XLSX(QMainWindow):
         super().__init__()
         self.homeui = Ui_MainWindow()
         self.Expense_Sys = Expenses()
+        self.person = Person('1', 'test', 'test', 'test', 'test', 'test', 'test', 'test', 'test', 'test', 'test', 'test', 'test', 'test', 'test', 'test', 'test')
         self.homeui.setupUi(self)
         self.homeui.Tab_window.currentChanged.connect(self.taber)
         self.SetupUI()
@@ -297,8 +415,6 @@ class XLSX(QMainWindow):
         title = self.homeui.title_lineedit.text()
         amount = self.homeui.exp_amount_lineedit.text()
         self.Expense_Sys.add_expense(title, int(amount))
-        self.Expense_Sys.save_to_file("expense.json")
-        
         self.taber(2)
 
     def add_building(self):
@@ -431,7 +547,7 @@ class XLSX(QMainWindow):
 
     def search(self):
         search_text = self.homeui.searchedit.text()
-        self.current_month, self.previous_month = Person.get_current_and_previous_month(self)
+        self.current_month, self.previous_month = self.person.get_current_and_previous_month()
         
         try:
             with open(f"data/{self.current_month}/persondata.json", "r") as json_file:
@@ -469,12 +585,10 @@ class XLSX(QMainWindow):
             qt_material.apply_stylesheet(self, "light_teal_500.xml")
             pass
         self.setStyleSheet(self.styleSheet() + '*{font: 11pt "Cascadia Code";}')
-    # def showpdata(self, e):
-    #     self.show_person_data()
 
     def convert_to_excel(self, e):
         try:
-            with open(f"data/{Person.get_current_and_previous_month(self)[0]}/persondata.json", "r") as json_file:
+            with open(f"data/{self.person.get_current_and_previous_month()[0]}/persondata.json", "r") as json_file:
                 data_dict = json.load(json_file)
             data_list = []
             for key, value in data_dict.items():
@@ -513,6 +627,26 @@ class XLSX(QMainWindow):
         print("This is a test", event.pos())
 
     def Add_Person_func(self):
+        # Personed(
+        #     self.homeui.Serial_Number.text(),
+        #     self.homeui.NIC.text(),
+        #     self.homeui.Rent.text(),
+        #     self.homeui.Rentel_Name.text(),
+        #     self.homeui.Due_Date.text(),
+        #     self.homeui.Received_Rent.text(),
+        #     self.homeui.Balance_Rent.text(),
+        #     self.homeui.Electric_Bill.text(),
+        #     self.homeui.Electricity_Meter_Number.text(),
+        #     self.homeui.Electricity_Account_Number.text(),
+        #     self.homeui.Consumer_Number.text(),
+        #     self.homeui.Electricity_Meter_Name.text(),
+        #     self.homeui.Gas_Costumer_Number.text(),
+        #     self.homeui.Gas_Meter_Number.text(),
+        #     self.homeui.Advance_Amount.text(),
+        #     self.homeui.buildingcombo_2.currentText(),
+        #     self.homeui.Gas_Bill.text(),
+
+        # )
         Person(
             self.homeui.Serial_Number.text(),
             self.homeui.NIC.text(),
@@ -809,7 +943,7 @@ class XLSX(QMainWindow):
     def SetupUI(self):
         if self.homeui.buildingcombobox.currentText() == "Show All Building":
             # Get today's date
-            self.current_month, self.previous_month = Person.get_current_and_previous_month(self)
+            self.current_month, self.previous_month = self.person.get_current_and_previous_month()
             try:
                 with open(f"data/{self.current_month}/persondata.json", "r") as json_file:
                     data = json.load(json_file)
@@ -865,7 +999,6 @@ class XLSX(QMainWindow):
                     self.Gas_Bill.setStyleSheet(self.Gas_Bill.styleSheet() + "background-color: red;")
                 elif person_data.get("Gas_Bill") == "Gas Bill is paid":
                     self.Electric_Bill.setStyleSheet(self.Electric_Bill.styleSheet() + "background-color: green;")
-                
 
     def electric_bill_3_method_changed(self):
         if self.Electric_Bill.isChecked():
@@ -893,28 +1026,14 @@ class XLSX(QMainWindow):
                 widget_to_remove = self.homeui.scrollAreaWidgetContents_expense.layout().itemAt(i).widget()
                 if widget_to_remove is not None:
                     widget_to_remove.setParent(None)
-            print("Current tab is Expense")
-            lay = self.homeui.scrollAreaWidgetContents_expense.layout()
-            data = self.Expense_Sys.read_file()
-            for expense_name, expense_data in data.items():
-                self.expense_title = QPushButton(f"{expense_name}: RS.{expense_data.get('Expense')}, {expense_data.get("date_added")}")
-                print(expense_name, expense_data)
+            data = self.Expense_Sys.get_all_expenses()
+            for expense in data:
+                self.expense_title = QPushButton(f"{expense[0]}: RS.{expense[1]} Date Added:{expense[2]}")
                 self.homeui.scrollAreaWidgetContents_expense.layout().addWidget(self.expense_title)
-                # self.homeui.scrollAreaWidgetContents_expense.layout().addWidget(self.expense_title)
-            # for person_name, person_data in data.items():
-            #     # self.show_persons_by_building("Compound")
-            #     self.expense_title = QPushButton(f"Rental Name: {expense_name} Building: {expense_data.get("Building")} Serial No.:{expense_data.get("Serial_Number")}")
-            #     self.expense_title.clicked.connect(lambda _, p=person_data: self.show_person_data(p))
-            #     # height
-            #     self.person_title.setStyleSheet(self.person_title.styleSheet()+ "height: 100px;")
-            #     lay.addWidget(self.person_title)
-
-        # print(n)
-        # pass
 
     def show_persons_by_building(self, building):
         try:
-            with open(f"data/{Person.get_current_and_previous_month(self)[0]}/persondata.json", "r") as file:
+            with open(f"data/{self.person.get_current_and_previous_month()[0]}/persondata.json", "r") as file:
                 data = json.load(file)
         except FileNotFoundError:
             data = {}
@@ -928,7 +1047,7 @@ class XLSX(QMainWindow):
         # self.display_persons(filtered_persons)
 
     def show_person_data(self, person):
-        print(type(person))
+        # print(type(person))
         form = Ui_Form()
         widget = QDialog(self)
         form.setupUi(widget)
@@ -1025,7 +1144,7 @@ class XLSX(QMainWindow):
 
         # Read the existing data from the JSON file
         try:
-            with open(f"data/{Person.get_current_and_previous_month(self)[0]}/persondata.json", "r") as file:
+            with open(f"data/{self.person.get_current_and_previous_month()[0]}/persondata.json", "r") as file:
                 data = json.load(file)
         except FileNotFoundError:
             data = []
@@ -1036,10 +1155,10 @@ class XLSX(QMainWindow):
             print(person_data)
             if person_datajson["Serial_Number"] == person_data["Serial_Number"]:
                 # person_data.update(person_data)
-                person_data["History"] = person_datajson["History"]
-                person_data["History"]["Rent"] = data[person_name]["Rent"]
-                person_data["History"]["Received_Rent"] = data[person_name]["Received_Rent"]
-                person_data["History"]["Balance_Rent"] = data[person_name]["Balance_Rent"]
+                # person_data["History"] = person_datajson["History"]
+                # person_data["History"]["Rent"] = data[person_name]["Rent"]
+                # person_data["History"]["Received_Rent"] = data[person_name]["Received_Rent"]
+                # person_data["History"]["Balance_Rent"] = data[person_name]["Balance_Rent"]
                 data[person_name] = person_data
                 break
         else:
@@ -1047,10 +1166,13 @@ class XLSX(QMainWindow):
             data.append(person_data)
 
         # Write the updated data back to the JSON file
-        with open(f"data/{Person.get_current_and_previous_month(self)[0]}/persondata.json", "w") as file:
+        with open(f"data/{self.person.get_current_and_previous_month()[0]}/persondata.json", "w") as file:
             json.dump(data, file, indent=4)
 
         print("Person data updated successfully!")
+        # for person_name, person_datajson in data.items():
+        #     if person_datajson["Serial_Number"] == person_data["Serial_Number"]:
+        #         self.person.update_person(person_name, **person_datajson)
 
     def closeEvent(self, event):
         self.setting.setValue("themeName", self.themeName)
