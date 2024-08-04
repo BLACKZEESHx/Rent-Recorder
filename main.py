@@ -1,3 +1,97 @@
+import pyautogui as gui
+import time
+from PIL import Image
+from pytesseract import pytesseract
+import numpy as np
+
+# import matplotlib.pyplot as plt
+
+# import matplotlib.image as mpimg
+
+
+def rgb2gray(rgb):
+    return np.dot(rgb[..., :3], [0.2989, 0.5870, 0.1140])
+
+
+def has_numbers(input_string):
+    digits = "".join(char for char in input_string if char.isdigit())
+    return bool(digits), digits
+
+
+is_on_right = False
+is_on_left = False
+
+while True:
+    gui.keyDown("w")
+    # gui.keyDown("a")
+    # is_on_right = False
+    # is_on_left = False
+    time.sleep(3)
+    # Defining paths to tesseract.exe
+    # and the image we would be using
+    path_to_tesseract = r"C:\Users\Black\AppData\Local\Tesseract-OCR\tesseract.exe"
+    gui.screenshot("image.png", (1120, 620, 100, 50))
+    image_path = "image.png"
+    # Opening the image & storing it in an image object
+    img = Image.open(image_path)
+    pytesseract.tesseract_cmd = path_to_tesseract
+
+    img_array = np.array(img)
+    gray = rgb2gray(img_array)
+    gray_image = Image.fromarray(np.uint8(gray))
+    # Passing the image object to image_to_string() function
+    # This function will extract the text from the image
+    text = pytesseract.image_to_string(gray_image)
+    # Example usag
+    print(text[:-1])
+    if text[:-1]:
+        contains_number, combined_digits = has_numbers(f"{text[:-1]}")
+        print(contains_number)  # True
+        print((combined_digits))  # 12
+        try:
+            if int(combined_digits) <= 100:
+                # print("YES>>>Yes>>Yes>>Yes>>Yes>>Yes")
+                if is_on_right == False:
+                    gui.keyDown("d")
+                    print("D")
+                    gui.moveTo(1255, 255)
+                    is_on_right = True
+                    is_on_left = False
+                    # time.sleep(5)
+                if is_on_left == False:
+                    gui.keyDown("a")
+                    gui.moveTo(255, 255)
+                    print("A")
+                    is_on_right = False
+                    is_on_left = True
+                    # time.sleep(5)
+        except:
+            pass
+
+exit()
+import requests
+from lxml import html
+
+
+def get_fba_sellers(asin):
+    url = f"https://www.amazon.com/dp/B000VZJ028/ref=olp-opf-redir?aod=1"
+    headers = {
+        "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/91.0.4472.124 Safari/537.36"
+    }
+    response = requests.get(url, headers=headers)
+    tree = html.fromstring(response.content)
+    sellers = tree.xpath(
+        '//div[contains(@class, "olpOffer")]//h3[contains(@class, "olpSellerName")]/span/a/text()'
+    )
+    return sellers
+
+
+asin = "B000VZJ028"  # Example ASIN
+sellers = get_fba_sellers(asin)
+print(sellers)
+
+exit()
+
 import sys, datetime
 import os
 import json

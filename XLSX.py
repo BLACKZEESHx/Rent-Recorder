@@ -98,7 +98,7 @@ class Personed:
         Building,
         Gas_Bill,
     ):
-        self.current_month, self.previous_month = self.get_current_and_previous_month()
+        self.current_month, self.previous_month = self.get_current_and_previous_month(self)
         self.setup_directories()
         self.setup_database()
         today = datetime.date.today().strftime("%Y-%m-%d")
@@ -232,42 +232,43 @@ class Person:
         Building,
         Gas_Bill
     ):
-        self.current_month, self.previous_month = self.get_current_and_previous_month()
-        self.setup_directories()
-        today = datetime.date.today().strftime("%Y-%m-%d")
-        dictionary = self.to_dictionary(
-            Serial_Number,
-            NIC,
-            Rent,
-            Rentel_Name,
-            Due_Date,
-            Received_Rent,
-            Balance_Rent,
-            Electric_Bill,
-            Electricity_Meter_Number,
-            Electricity_Account_Number,
-            Consumer_Number,
-            Electricity_Meter_Name,
-            Gas_Costumer_Number,
-            Gas_Meter_Number,
-            Advance_Amount,
-            Building,
-            Gas_Bill,
-            today
-        )
-        file_path = f"data/{self.current_month}/persondata.json"
-        try:
-            is_empty = os.path.getsize(file_path) == 0
-            if not is_empty:
-                with open(file_path, "r") as json_file:
-                    data_dict = json.load(json_file)
-            else:
-                data_dict = {}
-        except:
-            data_dict = {}
+            self.current_month, self.previous_month = self.get_current_and_previous_month(self)
+            self.setup_directories()
+            today = datetime.date.today().strftime("%Y-%m-%d")
+            dictionary = self.to_dictionary(
+                Serial_Number,
+                NIC,
+                Rent,
+                Rentel_Name,
+                Due_Date,
+                Received_Rent,
+                Balance_Rent,
+                Electric_Bill,
+                Electricity_Meter_Number,
+                Electricity_Account_Number,
+                Consumer_Number,
+                Electricity_Meter_Name,
+                Gas_Costumer_Number,
+                Gas_Meter_Number,
+                Advance_Amount,
+                Building,
+                Gas_Bill,
+                today
+            )
 
-        data_dict.update(dictionary)
-        self.to_json(file_path, data_dict)
+            file_path = f"data/{self.current_month}/persondata.json"
+            try:
+                is_empty = os.path.getsize(file_path) == 0
+                if not is_empty:
+                    with open(file_path, "r") as json_file:
+                        data_dict = json.load(json_file)
+                else:
+                    data_dict = {}
+            except:
+                data_dict = {}
+
+            data_dict.update(dictionary)
+            self.to_json(file_path, data_dict)
 
     def get_current_and_previous_month(self):
         today = datetime.date.today()
@@ -288,8 +289,9 @@ class Person:
                 os.rename(current_month_file, previous_month_file)
 
     def to_json(self, file_path, dictionary):
-        with open(file_path, "w") as f:
-            json.dump(dictionary, f, indent=4)
+        if dictionary["Serial_Number"] != "test":
+            with open(file_path, "w") as f:
+                json.dump(dictionary, f, indent=4)
 
     def to_dictionary(
         self,
@@ -348,7 +350,8 @@ class XLSX(QMainWindow):
         super().__init__()
         self.homeui = Ui_MainWindow()
         self.Expense_Sys = Expenses()
-        self.person = Person('1', 'test', 'test', 'test', 'test', 'test', 'test', 'test', 'test', 'test', 'test', 'test', 'test', 'test', 'test', 'test', 'test')
+        # Person = Person('test', 'test', 'test', 'test', 'test', 'test', 'test', 'test', 'test', 'test', 'test', 'test', 'test', 'test', 'test', 'test', 'test')
+        # Person = Person
         self.homeui.setupUi(self)
         self.homeui.Tab_window.currentChanged.connect(self.taber)
         self.SetupUI()
@@ -547,7 +550,7 @@ class XLSX(QMainWindow):
 
     def search(self):
         search_text = self.homeui.searchedit.text()
-        self.current_month, self.previous_month = self.person.get_current_and_previous_month()
+        self.current_month, self.previous_month = Person.get_current_and_previous_month(self)
         
         try:
             with open(f"data/{self.current_month}/persondata.json", "r") as json_file:
@@ -588,7 +591,7 @@ class XLSX(QMainWindow):
 
     def convert_to_excel(self, e):
         try:
-            with open(f"data/{self.person.get_current_and_previous_month()[0]}/persondata.json", "r") as json_file:
+            with open(f"data/{Person.get_current_and_previous_month(self)[0]}/persondata.json", "r") as json_file:
                 data_dict = json.load(json_file)
             data_list = []
             for key, value in data_dict.items():
@@ -943,7 +946,7 @@ class XLSX(QMainWindow):
     def SetupUI(self):
         if self.homeui.buildingcombobox.currentText() == "Show All Building":
             # Get today's date
-            self.current_month, self.previous_month = self.person.get_current_and_previous_month()
+            self.current_month, self.previous_month = Person.get_current_and_previous_month(self)
             try:
                 with open(f"data/{self.current_month}/persondata.json", "r") as json_file:
                     data = json.load(json_file)
@@ -1033,7 +1036,7 @@ class XLSX(QMainWindow):
 
     def show_persons_by_building(self, building):
         try:
-            with open(f"data/{self.person.get_current_and_previous_month()[0]}/persondata.json", "r") as file:
+            with open(f"data/{Person.get_current_and_previous_month(self)[0]}/persondata.json", "r") as file:
                 data = json.load(file)
         except FileNotFoundError:
             data = {}
@@ -1144,7 +1147,7 @@ class XLSX(QMainWindow):
 
         # Read the existing data from the JSON file
         try:
-            with open(f"data/{self.person.get_current_and_previous_month()[0]}/persondata.json", "r") as file:
+            with open(f"data/{Person.get_current_and_previous_month(self)[0]}/persondata.json", "r") as file:
                 data = json.load(file)
         except FileNotFoundError:
             data = []
@@ -1155,10 +1158,10 @@ class XLSX(QMainWindow):
             print(person_data)
             if person_datajson["Serial_Number"] == person_data["Serial_Number"]:
                 # person_data.update(person_data)
-                # person_data["History"] = person_datajson["History"]
-                # person_data["History"]["Rent"] = data[person_name]["Rent"]
-                # person_data["History"]["Received_Rent"] = data[person_name]["Received_Rent"]
-                # person_data["History"]["Balance_Rent"] = data[person_name]["Balance_Rent"]
+                person_data["History"] = person_datajson["History"]
+                person_data["History"]["Rent"] = data[person_name]["Rent"]
+                person_data["History"]["Received_Rent"] = data[person_name]["Received_Rent"]
+                person_data["History"]["Balance_Rent"] = data[person_name]["Balance_Rent"]
                 data[person_name] = person_data
                 break
         else:
@@ -1166,13 +1169,13 @@ class XLSX(QMainWindow):
             data.append(person_data)
 
         # Write the updated data back to the JSON file
-        with open(f"data/{self.person.get_current_and_previous_month()[0]}/persondata.json", "w") as file:
+        with open(f"data/{Person.get_current_and_previous_month(self)[0]}/persondata.json", "w") as file:
             json.dump(data, file, indent=4)
 
         print("Person data updated successfully!")
         # for person_name, person_datajson in data.items():
         #     if person_datajson["Serial_Number"] == person_data["Serial_Number"]:
-        #         self.person.update_person(person_name, **person_datajson)
+        #         Person.update_person(person_name, **person_datajson)
 
     def closeEvent(self, event):
         self.setting.setValue("themeName", self.themeName)
