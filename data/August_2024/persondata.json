@@ -1,0 +1,83 @@
+{
+    "Tailor": {
+        "Serial_Number": "1",
+        "NIC": "12345-74196350-3",
+        "Rent": "14000",
+        "Rentel_Name": "Tailor",
+        "Due_Date": "8",
+        "Received_Rent": "0",
+        "Balance_Rent": "100",
+        "Electric_Bill": "Electric Bill is paid",
+        "Gas_Bill": "Gas Bill is paid",
+        "Electricity_Meter_Number": "",
+        "Electricity_Account_Number": "",
+        "Consumer_Number": "",
+        "Electricity_Meter_Name": "",
+        "Gas_Costumer_Number": "",
+        "Gas_Meter_Number": "",
+        "Advance_Amount": "4000",
+        "Building": "Compound",
+        "History": [
+            {
+                "Date": "2024-6-7",
+                "Rent": "4110",
+                "Received_Rent": "0",
+                "Balance_Rent": "0"
+            }
+        ]
+    },
+    "Abdullah": {
+        "Serial_Number": "2",
+        "NIC": "0948234-5",
+        "Rent": "120000",
+        "Rentel_Name": "Abdullah",
+        "Due_Date": "7",
+        "Received_Rent": "0",
+        "Balance_Rent": "990",
+        "Electric_Bill": "Electric Bill is paid",
+        "Gas_Bill": "Gas Bill is paid",
+        "Electricity_Meter_Number": "Electricity_Meter_Number",
+        "Electricity_Account_Number": "Electricity_Account_Number",
+        "Consumer_Number": "Consumer_Number",
+        "Electricity_Meter_Name": "Electricity Meter Name",
+        "Gas_Costumer_Number": "Gas_Costumer_Number",
+        "Gas_Meter_Number": "Gas_Meter_Number",
+        "Advance_Amount": "3000",
+        "Building": "KK Moosa Plot No 72",
+        "History": [
+            {
+                "Date": "2024-08-08",
+                "Rent": "120000",
+                "Received_Rent": "0",
+                "Balance_Rent": "0"
+            }
+        ]
+    },
+    "Rahim": {
+        "Serial_Number": "3",
+        "NIC": "234234-6",
+        "Rent": "12000",
+        "Rentel_Name": "Rahim",
+        "Due_Date": "10",
+        "Received_Rent": "4000",
+        "Balance_Rent": "0",
+        "Electric_Bill": "Electric Bill is paid",
+        "Gas_Bill": "Gas Bill is paid",
+        "Electricity_Meter_Number": "Electricity_Meter_Number",
+        "Electricity_Account_Number": "Electricity_Account_Number",
+        "Consumer_Number": "Consumer_Number",
+        "Electricity_Meter_Name": "Electricity Meter Name",
+        "Gas_Costumer_Number": "Gas_Costumer_Number",
+        "Gas_Meter_Number": "null",
+        "Advance_Amount": "4000",
+        "Building": "Compound",
+        "History": [
+            {
+                "Date": "2024-08-10",
+                "Rent": "12000",
+                "Received_Rent": "4000",
+                "Balance_Rent": "0"
+            }
+        ]
+    }
+}

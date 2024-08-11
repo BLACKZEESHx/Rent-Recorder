@@ -8,6 +8,7 @@ from home import Ui_MainWindow
 from openpyxl import load_workbook
 from openpyxl.styles import PatternFill, Font
 from KK_Moosa_Plot_no_72 import Ui_Form
+from plyer import notification
 
 class Expenses:
     def __init__(self):
@@ -98,7 +99,7 @@ class Personed:
         Building,
         Gas_Bill,
     ):
-        self.current_month, self.previous_month = self.get_current_and_previous_month(self)
+        self.current_month, self.previous_month = self.get_current_and_previous_month()
         self.setup_directories()
         self.setup_database()
         today = datetime.date.today().strftime("%Y-%m-%d")
@@ -232,7 +233,7 @@ class Person:
         Building,
         Gas_Bill
     ):
-            self.current_month, self.previous_month = self.get_current_and_previous_month(self)
+            self.current_month, self.previous_month = self.get_current_and_previous_month()
             self.setup_directories()
             today = datetime.date.today().strftime("%Y-%m-%d")
             dictionary = self.to_dictionary(
@@ -289,9 +290,13 @@ class Person:
                 os.rename(current_month_file, previous_month_file)
 
     def to_json(self, file_path, dictionary):
-        if dictionary["Serial_Number"] != "test":
+        try:
+            if dictionary["Serial_Number"] != "test":
+                with open(file_path, "w") as f:
+                    json.dump(dictionary, f, indent=4)
+        except KeyError:
             with open(file_path, "w") as f:
-                json.dump(dictionary, f, indent=4)
+                json.dump(dictionary, f, indent=4)        
 
     def to_dictionary(
         self,
@@ -476,7 +481,7 @@ class XLSX(QMainWindow):
                 # person_title.setStyleSheet(person_title.styleSheet()+ "height: 100px;")
                 # self.homeui.scrollAreaWidgetContents.layout().addWidget(person_title)
                 self.person_layout = QWidget()
-                self.person_layout.setStyleSheet("QWidget{border-radius: 50px; padding: 0.5em; background-color: white;} QPushButton{border-radius:50px;}")
+                # self.person_layout.setStyleSheet("QWidget{border-radius: 50px; padding: 0.5em; background-color: white;} QPushButton{border-radius:50px;}")
                 self.person_widget = QGridLayout(self.person_layout)
                 self.person_info = QLabel(f"Rental Name: {person_name}\nSerial No.:{person_data.get("Serial_Number")}\nBuilding:{person_data.get("Building")} ")
                 self.Received_Rent = QLabel(f"Received Rent:{person_data.get("Received_Rent")}\nRent:{person_data.get("Rent")}\nBalance:{person_data.get("Balance_Rent")}")
@@ -964,15 +969,20 @@ class XLSX(QMainWindow):
             for person_name, person_data in data.items():
                 # self.show_persons_by_building("Compound")
                 self.person_layout = QWidget()
-                self.person_layout.setStyleSheet("QWidget{border-radius: 50px; padding: 0.5em; background-color: white;} QPushButton{border-radius:50px;}")
+                self.person_layout.setObjectName("person_layout")
+                # self.setStyleSheet(self.styleSheet() + "PushButton{border-radius:50px}")
                 self.person_widget = QGridLayout(self.person_layout)
                 self.person_info = QLabel(f"Rental Name: {person_name}\nSerial No.:{person_data.get("Serial_Number")}\nBuilding:{person_data.get("Building")} ")
                 self.Received_Rent = QLabel(f"Received Rent:{person_data.get("Received_Rent")}\nRent:{person_data.get("Rent")}\nBalance:{person_data.get("Balance_Rent")}")
                 self.Electric_Bill = QPushButton(f"{person_data.get("Electric_Bill")}")
                 self.Gas_Bill = QPushButton(f"{person_data.get("Gas_Bill")}")
+                self.Electric_Bill.setObjectName("ebill")
+                self.person_layout.setStyleSheet("QWidget#person_layout{border-radius: 50px; padding: 1.5em; border: 3px dotted white;};")
+                self.Electric_Bill.setStyleSheet("QPushButton#ebill{margin-top: 50px;}")
+
                 self.Gas_Bill.clicked.connect(lambda _, p=person_data: self.show_person_data(p))
                 self.Electric_Bill.clicked.connect(lambda _, p=person_data: self.show_person_data(p))
-                # self.Gas_Bill.setStyleSheet(sszelf.Gas_Bill.styleSheet()+ "border-radius: 50px;")
+                # self.Gas_Bill.setStyleSheet(self.Gas_Bill.styleSheet()+ "border-radius: 50px;")
                 # self.Electric_Bill.setStyleSheet(self.Electric_Bill.styleSheet()+ "border-radius: 50px;")
         
 
@@ -981,8 +991,8 @@ class XLSX(QMainWindow):
                 # self.person_info.setStyleSheet(self.person_info.styleSheet()+ "height: 100px;")
                 self.person_widget.addWidget(self.person_info, 0, 0, 9,1)
                 self.person_widget.addWidget(self.Received_Rent, 0, 1, 9,1)
-                self.person_widget.addWidget(self.Electric_Bill, 0, 2, 2,1)
-                self.person_widget.addWidget(self.Gas_Bill, 2, 2, 2,1)
+                self.person_widget.addWidget(self.Electric_Bill, 0, 2, 3,1)
+                self.person_widget.addWidget(self.Gas_Bill, 3, 2, 3,1)
                 self.homeui.scrollAreaWidgetContents.layout().addWidget(self.person_layout)
                 # self.person_layout.setStyleSheet(self.person_layout.styleSheet()+ "border: 1px solid red;")
 
@@ -992,16 +1002,33 @@ class XLSX(QMainWindow):
                 #     self.llabel.setHidden(True)
                 #     # self.person_title.setText(f"<h1>{key}:</h1><h2>{value}</h2>")
                 #     layout.addWidget(self.llabel)
-                
-                if person_data.get("Electric_Bill") == "Electric Bill is not paid":
-                    self.Gas_Bill.setStyleSheet(self.Gas_Bill.styleSheet() + "background-color: red;")
-                elif person_data.get("Electric_Bill") == "Electric Bill is paid":
-                    self.Electric_Bill.setStyleSheet(self.Electric_Bill.styleSheet() + "background-color: green;")
+                if person_data.get("Due_Date") == str(datetime.datetime.now().day):
 
-                if person_data.get("Gas_Bill") =="Gas Bill is not paid":
-                    self.Gas_Bill.setStyleSheet(self.Gas_Bill.styleSheet() + "background-color: red;")
-                elif person_data.get("Gas_Bill") == "Gas Bill is paid":
-                    self.Electric_Bill.setStyleSheet(self.Electric_Bill.styleSheet() + "background-color: green;")
+                    # notification.notify(
+                    #     title='Payment Reminder',
+                    #     message=f'{person_name} didn\'t pay the rent.',
+                    #     app_name='Rent Recorder',
+                    #     timeout=10  # Duration in seconds
+                    # )
+                    # Create a QWidget to display the payment information
+                    self.payment_info_widget = QWidget()
+                    self.payment_info_widget.setStyleSheet("QWidget{border-radius: 50px; padding: 0.5em; background-color: rgba(255, 0, 0, 128);}; color: white;")
+                    self.payment_info_layout = QVBoxLayout(self.payment_info_widget)
+                    self.payment_info_label = QLabel(f"Payment Reminder: It's {person_data.get("Due_Date")}th and {person_name} didn't pay the rent.")
+                    self.payment_info_layout.addWidget(self.payment_info_label)
+                    self.homeui.scrollAreaWidgetContents.layout().addWidget(self.payment_info_widget)
+                    # self.payment_info_widget.setHidden(True)
+                    # print(f"{person_name} did not receive the due date {person_data.get("Due_Date")}")
+                
+                # if person_data.get("Electric_Bill") == "Electric Bill is not paid":
+                #     self.Gas_Bill.setStyleSheet(self.Gas_Bill.styleSheet() + "background-color: red;")
+                # elif person_data.get("Electric_Bill") == "Electric Bill is paid":
+                #     self.Electric_Bill.setStyleSheet(self.Electric_Bill.styleSheet() + "background-color: green;")
+
+                # if person_data.get("Gas_Bill") =="Gas Bill is not paid":
+                #     self.Gas_Bill.setStyleSheet(self.Gas_Bill.styleSheet() + "background-color: red;")
+                # elif person_data.get("Gas_Bill") == "Gas Bill is paid":
+                #     self.Electric_Bill.setStyleSheet(self.Electric_Bill.styleSheet() + "background-color: green;")
 
     def electric_bill_3_method_changed(self):
         if self.Electric_Bill.isChecked():
@@ -1062,7 +1089,7 @@ class XLSX(QMainWindow):
             # dialog.layout = QVBoxLayout()
             for key, value in person.items():
                 person_widget = QLabel(f" <h2>{key}:</h2><h3>{value}</h3>")
-                person_widget.setStyleSheet(person_widget.styleSheet()+ "*{background-color: #F2F3F3;}")
+                # person_widget.setStyleSheet(person_widget.styleSheet()+ "*{background-color: #F2F3F3;}")
                 form.scrollAreaWidgetContents.layout().addWidget(person_widget)
             form.Serial_Number_3.setText(person["Serial_Number"])
             form.NIC_3.setText(person["NIC"])
@@ -1159,9 +1186,9 @@ class XLSX(QMainWindow):
             if person_datajson["Serial_Number"] == person_data["Serial_Number"]:
                 # person_data.update(person_data)
                 person_data["History"] = person_datajson["History"]
-                person_data["History"]["Rent"] = data[person_name]["Rent"]
-                person_data["History"]["Received_Rent"] = data[person_name]["Received_Rent"]
-                person_data["History"]["Balance_Rent"] = data[person_name]["Balance_Rent"]
+                # person_data["History"]["Rent"] = data[person_name]["Rent"]
+                # person_data["History"]["Received_Rent"] = data[person_name]["Received_Rent"]
+                # person_data["History"]["Balance_Rent"] = data[person_name]["Balance_Rent"]
                 data[person_name] = person_data
                 break
         else:
