@@ -475,13 +475,7 @@ class XLSX(QMainWindow):
                 if widget_to_remove is not None:
                     widget_to_remove.setParent(None)
             for person_name, person_data in self.show_persons_by_building(n).items():
-                # person_title = QPushButton(f"Rental Name: {person_name} Building: {person_data.get("Building")} Serial No.:{person_data.get("Serial_Number")}")
-                # person_title.clicked.connect(lambda _, p=person_data: self.show_person_data(p))
-                # # height
-                # person_title.setStyleSheet(person_title.styleSheet()+ "height: 100px;")
-                # self.homeui.scrollAreaWidgetContents.layout().addWidget(person_title)
                 self.person_layout = QWidget()
-                # self.person_layout.setStyleSheet("QWidget{border-radius: 50px; padding: 0.5em; background-color: white;} QPushButton{border-radius:50px;}")
                 self.person_widget = QGridLayout(self.person_layout)
                 self.person_info = QLabel(f"Rental Name: {person_name}\nSerial No.:{person_data.get("Serial_Number")}\nBuilding:{person_data.get("Building")} ")
                 self.Received_Rent = QLabel(f"Received Rent:{person_data.get("Received_Rent")}\nRent:{person_data.get("Rent")}\nBalance:{person_data.get("Balance_Rent")}")
@@ -489,27 +483,11 @@ class XLSX(QMainWindow):
                 self.Gas_Bill = QPushButton(f"{person_data.get("Gas_Bill")}")
                 self.Gas_Bill.clicked.connect(lambda _, p=person_data: self.show_person_data(p))
                 self.Electric_Bill.clicked.connect(lambda _, p=person_data: self.show_person_data(p))
-                # self.Gas_Bill.setStyleSheet(sszelf.Gas_Bill.styleSheet()+ "border-radius: 50px;")
-                # self.Electric_Bill.setStyleSheet(self.Electric_Bill.styleSheet()+ "border-radius: 50px;")
-        
-
-                # self.person_info.clicked.connect(lambda _, p=person_data: self.show_person_data(p))
-                # height
-                # self.person_info.setStyleSheet(self.person_info.styleSheet()+ "height: 100px;")
                 self.person_widget.addWidget(self.person_info, 0, 0, 9,1)
                 self.person_widget.addWidget(self.Received_Rent, 0, 1, 9,1)
                 self.person_widget.addWidget(self.Electric_Bill, 0, 2, 2,1)
                 self.person_widget.addWidget(self.Gas_Bill, 2, 2, 2,1)
                 self.homeui.scrollAreaWidgetContents.layout().addWidget(self.person_layout)
-                # self.person_layout.setStyleSheet(self.person_layout.styleSheet()+ "border: 1px solid red;")
-
-                
-                # for key, value in person_data.items():
-                #     self.llabel = QLabel(f"<h1>{key}:</h1><h2>{value}</h2>")
-                #     self.llabel.setHidden(True)
-                #     # self.person_title.setText(f"<h1>{key}:</h1><h2>{value}</h2>")
-                #     layout.addWidget(self.llabel)
-                
                 if person_data.get("Electric_Bill") == "Electric Bill is not paid":
                     self.Gas_Bill.setStyleSheet(self.Gas_Bill.styleSheet() + "background-color: red;")
                 elif person_data.get("Electric_Bill") == "Electric Bill is paid":
@@ -520,22 +498,13 @@ class XLSX(QMainWindow):
                 elif person_data.get("Gas_Bill") == "Gas Bill is paid":
                     self.Electric_Bill.setStyleSheet(self.Electric_Bill.styleSheet() + "background-color: green;")
 
-            # print(self.show_persons_by_building(n))
-            
-        # Add building window
-        # with open("buildings.txt", "a") as file_building:
-        #     file_building.write()
-        # pass
-
     def Add_Building(self, name: QLineEdit):
         # Add building window
         with open("buildings.txt", "a") as file_building:
             file_building.write(name.text() + "\n")
-
         print(name.text())
         
     def setupui_search(self):
-        # print(self.homeui.searchedit.text())
         if self.homeui.buildingcombobox.currentText() == "Show All Building":
             if self.homeui.searchedit.text() == "":
                 for i in reversed(range(self.homeui.scrollAreaWidgetContents.layout().count())):
@@ -546,12 +515,6 @@ class XLSX(QMainWindow):
                 self.SetupUI()
         elif self.homeui.buildingcombobox.currentText() != "Show All Building" :
             self.read_buildings_file()
-        
-
-            # qt_material.apply_stylesheet(self, "light_teal_500.xml")
-
-
-        # Create an if statement to check if the search string is empty or not. if the search string is empty then print("No search")
 
     def search(self):
         search_text = self.homeui.searchedit.text()
@@ -566,8 +529,6 @@ class XLSX(QMainWindow):
         if search_text:
             for rentel_name, datas in data.items():
                 if search_text.lower() in rentel_name.lower() or search_text.lower() in datas.get("Serial_Number") or search_text.lower() in datas.get("NIC") or search_text.lower() in datas.get("Due_Date"):
-                    # QMessageBox.information(self, "Search",f" Search for {rentel_name},  in {datas}")
-                    # self.show_person_data(datas)
                     for i in reversed(range(self.homeui.scrollAreaWidgetContents.layout().count())):
                         widget_to_remove = self.homeui.scrollAreaWidgetContents.layout().itemAt(i).widget()
                         if widget_to_remove is not None:
@@ -579,9 +540,7 @@ class XLSX(QMainWindow):
                         label = QLabel(f"<h2>{key}:</h2><h3>{value}</h3>")
                         label.mousePressEvent = lambda _, p=datas: self.show_person_data(p)
                         label.setStyleSheet(label.styleSheet()+ "*{background-color: #F2F3F3;}")
-                        layout.addWidget(label)
-                        # layout.addWidget(QLabel("<hr>"))
-                        
+                        layout.addWidget(label)                        
 
                     self.SetupUI()
                     break
@@ -1002,34 +961,45 @@ class XLSX(QMainWindow):
                 #     self.llabel.setHidden(True)
                 #     # self.person_title.setText(f"<h1>{key}:</h1><h2>{value}</h2>")
                 #     layout.addWidget(self.llabel)
-                if person_data.get("Due_Date") == str(datetime.datetime.now().day):
 
-                    # notification.notify(
-                    #     title='Payment Reminder',
-                    #     message=f'{person_name} didn\'t pay the rent.',
-                    #     app_name='Rent Recorder',
-                    #     timeout=10  # Duration in seconds
-                    # )
-                    # Create a QWidget to display the payment information
-                    self.payment_info_widget = QWidget()
-                    self.payment_info_widget.setStyleSheet("QWidget{border-radius: 50px; padding: 0.5em; background-color: rgba(255, 0, 0, 128);}; color: white;")
-                    self.payment_info_layout = QVBoxLayout(self.payment_info_widget)
-                    self.payment_info_label = QLabel(f"Payment Reminder: It's {person_data.get("Due_Date")}th and {person_name} didn't pay the rent.")
-                    self.payment_info_layout.addWidget(self.payment_info_label)
-                    self.homeui.scrollAreaWidgetContents.layout().addWidget(self.payment_info_widget)
-                    # self.payment_info_widget.setHidden(True)
-                    # print(f"{person_name} did not receive the due date {person_data.get("Due_Date")}")
-                
-                # if person_data.get("Electric_Bill") == "Electric Bill is not paid":
-                #     self.Gas_Bill.setStyleSheet(self.Gas_Bill.styleSheet() + "background-color: red;")
-                # elif person_data.get("Electric_Bill") == "Electric Bill is paid":
-                #     self.Electric_Bill.setStyleSheet(self.Electric_Bill.styleSheet() + "background-color: green;")
+                if person_data.get("is_paid") == "yes" and int(person_data.get("Received_Rent")) < int(person_data.get("Rent")):
+                    if int(person_data.get("Received_Rent")) != 0:
+                        sumed = int(person_data.get("Rent")) - int(person_data.get("Received_Rent"))
+                        person_data["Balance_Rent"] = str(sumed)
+                        # person_data["Received_Rent"] = str(0)
+                        data[person_name] = person_data
+                        with open(f"data/{Person.get_current_and_previous_month(self)[0]}/persondata.json", "w") as file:
+                            json.dump(data, file, indent=4)
 
-                # if person_data.get("Gas_Bill") =="Gas Bill is not paid":
-                #     self.Gas_Bill.setStyleSheet(self.Gas_Bill.styleSheet() + "background-color: red;")
-                # elif person_data.get("Gas_Bill") == "Gas Bill is paid":
-                #     self.Electric_Bill.setStyleSheet(self.Electric_Bill.styleSheet() + "background-color: green;")
-
+                        # HE/SHE PAID SYSTEM
+                if int(person_data.get("Received_Rent")) < int(person_data.get("Rent")) and person_data.get("is_paid") == "no":
+                    if int(person_data.get("Received_Rent")) != 0:
+                        sumed = int(person_data.get("Balance_Rent")) - int(person_data.get("Received_Rent"))
+                        person_data["Balance_Rent"] = str(sumed)
+                        person_data["Received_Rent"] = str(0)
+                        data[person_name] = person_data
+                        with open(f"data/{Person.get_current_and_previous_month(self)[0]}/persondata.json", "w") as file:
+                            json.dump(data, file, indent=4)
+            
+                if int(person_data.get("Received_Rent")) > int(person_data.get("Rent")):
+                    if int(person_data.get("Balance_Rent")) != 0:
+                        sumed = int(person_data.get("Received_Rent")) - int(person_data.get("Rent"))
+                        sumed2 = int(person_data.get("Balance_Rent")) - sumed
+                        person_data["Balance_Rent"] = str(sumed2)
+                        person_data["Received_Rent"] = str(0)
+                        data[person_name] = person_data
+                        with open(f"data/{Person.get_current_and_previous_month(self)[0]}/persondata.json", "w") as file:
+                            json.dump(data, file, indent=4)
+                            
+                if person_data.get("Due_Date") == str(datetime.datetime.now().day) :
+                    if not int(person_data.get("Received_Rent")) >= int(person_data.get("Rent")):
+                        self.payment_info_widget = QWidget()
+                        self.payment_info_widget.setStyleSheet("QWidget{border-radius: 50px; padding: 0.5em; background-color: rgba(255, 0, 0, 128);}; color: white;")
+                        self.payment_info_layout = QVBoxLayout(self.payment_info_widget)
+                        self.payment_info_label = QLabel(f"Payment Reminder: It's {person_data.get("Due_Date")}th and {person_name} didn't pay the rent.")
+                        self.payment_info_layout.addWidget(self.payment_info_label)
+                        self.homeui.scrollAreaWidgetContents.layout().addWidget(self.payment_info_widget)
+        
     def electric_bill_3_method_changed(self):
         if self.Electric_Bill.isChecked():
             print("Yes", self.Electric_Bill.isChecked())

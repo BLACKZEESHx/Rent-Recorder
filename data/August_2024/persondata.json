@@ -2,11 +2,11 @@
     "Tailor": {
         "Serial_Number": "1",
         "NIC": "12345-74196350-3",
-        "Rent": "14000",
+        "Rent": "140",
         "Rentel_Name": "Tailor",
         "Due_Date": "8",
-        "Received_Rent": "0",
-        "Balance_Rent": "100",
+        "Received_Rent": "10",
+        "Balance_Rent": "130",
         "Electric_Bill": "Electric Bill is paid",
         "Gas_Bill": "Gas Bill is paid",
         "Electricity_Meter_Number": "",
@@ -33,7 +33,7 @@
         "Rentel_Name": "Abdullah",
         "Due_Date": "7",
         "Received_Rent": "0",
-        "Balance_Rent": "990",
+        "Balance_Rent": "120000",
         "Electric_Bill": "Electric Bill is paid",
         "Gas_Bill": "Gas Bill is paid",
         "Electricity_Meter_Number": "Electricity_Meter_Number",
@@ -56,11 +56,11 @@
     "Rahim": {
         "Serial_Number": "3",
         "NIC": "234234-6",
-        "Rent": "12000",
+        "Rent": "120",
         "Rentel_Name": "Rahim",
         "Due_Date": "10",
-        "Received_Rent": "4000",
-        "Balance_Rent": "0",
+        "Received_Rent": "80",
+        "Balance_Rent": "40",
         "Electric_Bill": "Electric Bill is paid",
         "Gas_Bill": "Gas Bill is paid",
         "Electricity_Meter_Number": "Electricity_Meter_Number",
@@ -76,6 +76,33 @@
                 "Date": "2024-08-10",
                 "Rent": "12000",
                 "Received_Rent": "4000",
+                "Balance_Rent": "0"
+            }
+        ]
+    },
+    "TAILORSSON": {
+        "Serial_Number": "4",
+        "NIC": "23409-23490-5",
+        "Rent": "30",
+        "Rentel_Name": "TAILORSSON",
+        "Due_Date": "26",
+        "Received_Rent": "25",
+        "Balance_Rent": "5",
+        "Electric_Bill": "Electric Bill is paid",
+        "Gas_Bill": "Gas Bill is paid",
+        "Electricity_Meter_Number": "Electricity_Meter_Number",
+        "Electricity_Account_Number": "Electricity_Account_Number",
+        "Consumer_Number": "Consumer_Number",
+        "Electricity_Meter_Name": "Electricity Meter Name",
+        "Gas_Costumer_Number": "Gas_Costumer_Number",
+        "Gas_Meter_Number": "Gas_Meter_Number",
+        "Advance_Amount": "40000",
+        "Building": "KK Moosa Plot No 72",
+        "History": [
+            {
+                "Date": "2024-08-26",
+                "Rent": "1202002",
+                "Received_Rent": "0",
                 "Balance_Rent": "0"
             }
         ]
